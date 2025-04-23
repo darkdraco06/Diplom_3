@@ -4,6 +4,15 @@ import allure
 
 
 class HistoryOrderPage(BasePage):
-    @allure.step('Получаем номер последнего заказа пользователя из истории заказов')
-    def get_number_order_hystiri_order(self, browser):
-        return self.get_text_element(browser, locators.history_order_page.ORDER_BLOCK)
+
+    def __init__(self, browser):
+        super().__init__(browser)
+
+    @allure.step('Получаем список заказов в работе')
+    def get_orders_user(self):
+        orders = self.get_find_element_on_page(locators.history_order_page.ORDER_BLOCK).text
+        return orders
+
+    @allure.step('Ожидание загрузки блока с заказами')
+    def wait_load_order_block_history(self):
+        self.wait_for_load_element(locators.history_order_page.ORDER_BLOCK)
